@@ -3,14 +3,15 @@ const mongoose = require("mongoose");
 const app = express();
 const User = require("./models/userModels");
 const PORT = 3000;
-
-// MongoDB Atlas connection string
-const DB_URI =
-  "mongodb+srv://sejalyadav122:0VUM0yQN0XSxlL97@cluster0.b9eybdu.mongodb.net/?retryWrites=true&w=majority";
+require("dotenv").config();
 
 // Connect to MongoDB Atlas
+console.log(process.env.DB_URI);
 mongoose
-  .connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB Atlas!");
   })
