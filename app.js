@@ -1,12 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const User = require("./models/userModels");
+const User = require("./models/User");
 const PORT = 3000;
 require("dotenv").config();
+const userRoute = require("./routes/userRoutes");
+const bodyPareser = require("body-parser");
+app.use(bodyPareser.json());
+
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    return res.status(400).send({ error: "Invalid JSON" });
+  }
+  next(err);
+});
 
 // Connect to MongoDB Atlas
-console.log(process.env.DB_URI);
 mongoose
   .connect(process.env.DB_URI, {
     useNewUrlParser: true,
@@ -19,18 +28,8 @@ mongoose
     console.error("Error connecting to MongoDB Atlas:", err);
   });
 
-async function insertUser() {
-  await User.create({
-    name: "sejal",
-    email: "sejal@gmail.com",
-    age: 21,
-  });
-}
-app.get("/", (req, res) => {
-  insertUser();
-  res.send("User Inserted successfully");
-});
-
+app.use(express.json());
+app.use(userRoute);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
