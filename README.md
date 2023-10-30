@@ -196,7 +196,7 @@ node_modules/
 .env
 ```
 
-# In login To call a HOme API endpoint ( `/home` or any other endpoint you've protected using the `authenticateJWT` middleware) after logging in and obtaining a JWT token, follow these steps:
+### In login To call a HOme API endpoint ( `/home` or any other endpoint you've protected using the `authenticateJWT` middleware) after logging in and obtaining a JWT token, follow these steps:
 
 ### Using Postman:
 
