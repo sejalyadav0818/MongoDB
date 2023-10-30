@@ -196,6 +196,29 @@ node_modules/
 .env
 ```
 
+# In login To call a HOme API endpoint ( `/home` or any other endpoint you've protected using the `authenticateJWT` middleware) after logging in and obtaining a JWT token, follow these steps:
+
+### Using Postman:
+
+1. **Login First**:
+    - Send a `POST` request to your `/login` endpoint with the necessary credentials to obtain a JWT.
+    - In the response section, you should see a JWT token. Copy this token.
+
+2. **Setup Request for Protected Endpoint**:
+    - Create a new request in Postman or select an existing one that targets your protected endpoint (e.g., `http://localhost:3000/home`).
+    - Set the HTTP method appropriately (`GET`, `POST`, etc.), depending on what the endpoint expects.
+
+3. **Add Authorization Header**:
+    - Go to the `Headers` tab in Postman.
+    - Add a new header with the `Key` as `Authorization`.
+    - For the `Value`, enter `Bearer ` followed by the token value you copied from the login response. It should look something like:
+      ```
+      Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      ```
+
+4. **Send the Request**:
+    - Click the `Send` button to send the request to the protected endpoint.
+    - If the token is valid and not expired, you should receive the expected data/response from the server. If the token is invalid or expired, you should receive an error, such as "Unauthorized".
 
 
 
@@ -265,3 +288,5 @@ node_modules/
 11. **Rate Limiting**:
 
 - Implement rate limiting to prevent abuse of your API. Limit the number of requests a single IP can make in a specific time frame.
+
+
