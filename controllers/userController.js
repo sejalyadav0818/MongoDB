@@ -162,15 +162,15 @@ exports.home = (req, res) => {
   res.status(200).json({ message: "Hello, this is the home page" });
 };
 
-// exports.readAllUser = async (req, res) => {
-//   try {
-//     const user = await User.find({});
-//     if (!user) return res.status(404).send();
-//     res.send(user);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// };
+exports.readAllUser = async (req, res) => {
+  try {
+    const user = await User.find({});
+    if (!user) return res.status(404).send();
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 //check : http://localhost:3000/users/?serch=sejal&page=1&sortby=username&order=desc
 

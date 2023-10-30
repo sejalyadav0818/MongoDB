@@ -12,6 +12,6 @@ router.delete("/users/:id", userController.deleteUser);
 router.post("/login", userController.loginUser);
 router.get("/home", authenticateJWT, userController.home);
 
-// router.get("/users", userController.readAllUser);
+router.get("/users", userController.readAllUser);
 
 module.exports = router;

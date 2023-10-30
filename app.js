@@ -10,6 +10,13 @@ const carRoutes = require("./routes/carRoutes");
 const usercarRoutes = require("./routes/usercarRoutes");
 const bodyPareser = require("body-parser");
 app.use(bodyPareser.json());
+const RateLImiter = require("express-rate-limit");
+const apiLimiter = RateLImiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes15: The number of minutes. 60: The number of seconds in a minute.1000: The number of milliseconds in a second.
+  max: 2, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later.",
+});
+app.use(apiLimiter);
 
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
