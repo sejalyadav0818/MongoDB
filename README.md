@@ -266,6 +266,11 @@ These indicate that the server failed to fulfill a valid request.
           res.status(200).json({ message: "Request was successful" });
 });
 ```
+# One to Many Relation 
+  ![image](https://github.com/sejalyadav0818/mongodb/assets/130818890/4789210c-7a46-4eb9-b0a8-b6e22db09b48)
+
+# Many to Many Relation 
+  ![image](https://github.com/sejalyadav0818/mongodb/assets/130818890/ea39bfa4-98f9-4071-9d8b-d50c5e089b34)
 
 
 ### Simple Tasks:
