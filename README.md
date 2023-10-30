@@ -220,6 +220,52 @@ node_modules/
     - Click the `Send` button to send the request to the protected endpoint.
     - If the token is valid and not expired, you should receive the expected data/response from the server. If the token is invalid or expired, you should receive an error, such as "Unauthorized".
 
+# Most commonly used HTTP status codes and when to use them:
+
+### 1xx: Informational
+These are informational status codes. They indicate that the request was received and is being processed.
+
+- `100 Continue`: The server has received the request headers and the client should proceed to send the request body.
+- `101 Switching Protocols`: The requester has asked the server to switch protocols.
+
+### 2xx: Success
+These indicate that the request was successfully received, understood, and accepted.
+
+- `200 OK`: Standard response for successful HTTP requests.
+- `201 Created`: The request has been fulfilled and a new resource has been created.
+- `202 Accepted`: The request has been accepted for processing, but processing is not complete.
+- `204 No Content`: The server has successfully processed the request, but there's no content to send in the response.
+
+### 3xx: Redirection
+These indicate that further action needs to be taken by the user agent to fulfill the request.
+
+- `301 Moved Permanently`: The URL of the requested resource has changed permanently.
+- `302 Found`: Temporary redirection.
+- `304 Not Modified`: The resource hasn't been modified since the last request.
+
+### 4xx: Client Errors
+These indicate that the client seems to have made an error.
+
+- `400 Bad Request`: The server cannot or will not process the request due to something perceived to be a client error.
+- `401 Unauthorized`: The client must authenticate itself to get the requested response.
+- `403 Forbidden`: The client does not have access rights to the content.
+- `404 Not Found`: The server can't find the requested resource.
+- `405 Method Not Allowed`: The request method is not supported for the requested resource.
+- `429 Too Many Requests`: The user has sent too many requests in a given amount of time ("rate limiting").
+
+### 5xx: Server Errors
+These indicate that the server failed to fulfill a valid request.
+
+- `500 Internal Server Error`: A generic error message when an unexpected condition was encountered.
+- `501 Not Implemented`: The server does not have the functionality to fulfill the request.
+- `502 Bad Gateway`: The server, while working as a gateway, got an invalid response from the upstream server.
+- `503 Service Unavailable`: The server cannot handle the request, usually due to maintenance or overloading.
+- 
+```javaScript
+      app.get('/success', (req, res) => {
+          res.status(200).json({ message: "Request was successful" });
+});
+```
 
 
 ### Simple Tasks:
@@ -243,7 +289,9 @@ node_modules/
 3. **Test with Postman**:
    - Use Postman to make requests to your API for each of the above routes.
    - Ensure you can successfully create, retrieve, update, and delete users.
-
+     
+ #[Check My postman collections](https://documenter.getpostman.com/view/26990240/2s9YRGypPi)
+ 
 ### Intermediate Tasks:
 
 4. **Data Validation**:
