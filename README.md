@@ -236,9 +236,12 @@ These indicate that the server failed to fulfill a valid request.
 - `501 Not Implemented`: The server does not have the functionality to fulfill the request.
 - `502 Bad Gateway`: The server, while working as a gateway, got an invalid response from the upstream server.
 - `503 Service Unavailable`: The server cannot handle the request, usually due to maintenance or overloading.
-
-
-
+- 
+```javaScript
+      app.get('/success', (req, res) => {
+          res.status(200).json({ message: "Request was successful" });
+});
+```
 
 
 ### Simple Tasks:
