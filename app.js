@@ -5,6 +5,9 @@ const User = require("./models/User");
 const PORT = 3000;
 require("dotenv").config();
 const userRoute = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
+const carRoutes = require("./routes/carRoutes");
+const usercarRoutes = require("./routes/usercarRoutes");
 const bodyPareser = require("body-parser");
 app.use(bodyPareser.json());
 
@@ -30,6 +33,9 @@ mongoose
 
 app.use(express.json());
 app.use(userRoute);
+app.use(postRoutes);
+app.use(carRoutes);
+app.use(usercarRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

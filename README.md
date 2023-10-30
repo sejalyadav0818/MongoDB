@@ -62,7 +62,6 @@ const Todo = mongoose.model("Todo", todoSchema);
 
 ![folder strucrire](https://github.com/sejalyadav0818/mongodb/assets/130818890/f6b21812-0ba6-4c1d-9eb0-b1f4317be896)
 
-
 # How to use routes, controllers, middleware in Node js ?
 
 ### Routes:
@@ -72,8 +71,8 @@ Routes in Express define endpoints at which requests can be made. Routes specify
 For example:
 
 ```javascript
-app.get('/users', usersController.getAll);
-app.post('/users', usersController.create);
+app.get("/users", usersController.getAll);
+app.post("/users", usersController.create);
 ```
 
 ### Controllers:
@@ -83,25 +82,25 @@ Controllers take in a client request (from a route) and return a suitable respon
 For instance, a basic `usersController` could look like:
 
 ```javascript
-const User = require('../models/User');
+const User = require("../models/User");
 
 exports.getAll = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ error: "Server error" });
-    }
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
 exports.create = async (req, res) => {
-    try {
-        const newUser = new User(req.body);
-        await newUser.save();
-        res.status(201).json(newUser);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to create user" });
-    }
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create user" });
+  }
 };
 ```
 
@@ -120,17 +119,17 @@ For instance, to check if a user is authenticated:
 
 ```javascript
 function isAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/login');
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
 }
 ```
 
 You would use this middleware like so:
 
 ```javascript
-app.post('/post', isAuthenticated, postController.create);
+app.post("/post", isAuthenticated, postController.create);
 ```
 
 The `isAuthenticated` middleware will run before the `postController.create` function. If the user is authenticated, it will move to the next function in line (which is the controller function). If not, it will redirect the user to the login page.
@@ -141,7 +140,6 @@ The `isAuthenticated` middleware will run before the `postController.create` fun
 2. **Use Middleware Wisely**: Middleware can be incredibly powerful but can also make debugging tricky if you're not careful. Always ensure you call `next()` in your middleware to avoid getting stuck.
 3. **Modularity**: Try to make your middleware reusable. This means you can apply them to any route you want without repeating code.
 4. **Error Handling**: It's a good idea to have centralized error handling. This can be achieved using middleware that catches errors and sends appropriate responses.
-
 
 ## `.env` file:
 
@@ -170,7 +168,7 @@ Remember to replace the above URI with your actual MongoDB Atlas connection stri
 At the very top of your main application file (usually `app.js` or `server.js`), add the following:
 
 ```javascript
-require('dotenv').config();
+require("dotenv").config();
 ```
 
 This line loads the variables from the `.env` file and makes them available via `process.env`.
@@ -180,8 +178,11 @@ This line loads the variables from the `.env` file and makes them available via 
 Now, wherever you need to connect to the database, use the `DB_URI` environment variable:
 
 ```javascript
-const mongoose = require('mongoose');
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 ```
 
 ### 5. Keep .env confidential:
@@ -201,34 +202,39 @@ node_modules/
 ### Using Postman:
 
 1. **Login First**:
-    - Send a `POST` request to your `/login` endpoint with the necessary credentials to obtain a JWT.
-    - In the response section, you should see a JWT token. Copy this token.
+
+   - Send a `POST` request to your `/login` endpoint with the necessary credentials to obtain a JWT.
+   - In the response section, you should see a JWT token. Copy this token.
 
 2. **Setup Request for Protected Endpoint**:
-    - Create a new request in Postman or select an existing one that targets your protected endpoint (e.g., `http://localhost:3000/home`).
-    - Set the HTTP method appropriately (`GET`, `POST`, etc.), depending on what the endpoint expects.
+
+   - Create a new request in Postman or select an existing one that targets your protected endpoint (e.g., `http://localhost:3000/home`).
+   - Set the HTTP method appropriately (`GET`, `POST`, etc.), depending on what the endpoint expects.
 
 3. **Add Authorization Header**:
-    - Go to the `Headers` tab in Postman.
-    - Add a new header with the `Key` as `Authorization`.
-    - For the `Value`, enter `Bearer ` followed by the token value you copied from the login response. It should look something like:
-      ```
-      Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-      ```
+
+   - Go to the `Headers` tab in Postman.
+   - Add a new header with the `Key` as `Authorization`.
+   - For the `Value`, enter `Bearer ` followed by the token value you copied from the login response. It should look something like:
+     ```
+     Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+     ```
 
 4. **Send the Request**:
-    - Click the `Send` button to send the request to the protected endpoint.
-    - If the token is valid and not expired, you should receive the expected data/response from the server. If the token is invalid or expired, you should receive an error, such as "Unauthorized".
+   - Click the `Send` button to send the request to the protected endpoint.
+   - If the token is valid and not expired, you should receive the expected data/response from the server. If the token is invalid or expired, you should receive an error, such as "Unauthorized".
 
 # Most commonly used HTTP status codes and when to use them:
 
 ### 1xx: Informational
+
 These are informational status codes. They indicate that the request was received and is being processed.
 
 - `100 Continue`: The server has received the request headers and the client should proceed to send the request body.
 - `101 Switching Protocols`: The requester has asked the server to switch protocols.
 
 ### 2xx: Success
+
 These indicate that the request was successfully received, understood, and accepted.
 
 - `200 OK`: Standard response for successful HTTP requests.
@@ -237,6 +243,7 @@ These indicate that the request was successfully received, understood, and accep
 - `204 No Content`: The server has successfully processed the request, but there's no content to send in the response.
 
 ### 3xx: Redirection
+
 These indicate that further action needs to be taken by the user agent to fulfill the request.
 
 - `301 Moved Permanently`: The URL of the requested resource has changed permanently.
@@ -244,6 +251,7 @@ These indicate that further action needs to be taken by the user agent to fulfil
 - `304 Not Modified`: The resource hasn't been modified since the last request.
 
 ### 4xx: Client Errors
+
 These indicate that the client seems to have made an error.
 
 - `400 Bad Request`: The server cannot or will not process the request due to something perceived to be a client error.
@@ -254,19 +262,20 @@ These indicate that the client seems to have made an error.
 - `429 Too Many Requests`: The user has sent too many requests in a given amount of time ("rate limiting").
 
 ### 5xx: Server Errors
+
 These indicate that the server failed to fulfill a valid request.
 
 - `500 Internal Server Error`: A generic error message when an unexpected condition was encountered.
 - `501 Not Implemented`: The server does not have the functionality to fulfill the request.
 - `502 Bad Gateway`: The server, while working as a gateway, got an invalid response from the upstream server.
 - `503 Service Unavailable`: The server cannot handle the request, usually due to maintenance or overloading.
-- 
+-
+
 ```javaScript
       app.get('/success', (req, res) => {
           res.status(200).json({ message: "Request was successful" });
 });
 ```
-
 
 ### Simple Tasks:
 
@@ -289,9 +298,9 @@ These indicate that the server failed to fulfill a valid request.
 3. **Test with Postman**:
    - Use Postman to make requests to your API for each of the above routes.
    - Ensure you can successfully create, retrieve, update, and delete users.
-     
- #[Check My postman collections](https://documenter.getpostman.com/view/26990240/2s9YRGypPi)
- 
+
+#[Check My postman collections](https://documenter.getpostman.com/view/26990240/2s9YRGypPi)
+
 ### Intermediate Tasks:
 
 4. **Data Validation**:
@@ -319,11 +328,13 @@ These indicate that the server failed to fulfill a valid request.
 8. **Relationships**:
 
    - Create a second model, e.g., `Post` with fields: `title`, `content`, and `author`.
-   - Establish a relationship between `User` and `Post` (each user can have multiple posts).
-   - Implement routes to:
+   - Establish a relationship between `User` and `Post` (each user can have multiple posts). 1 TO MANY
+   - Establish a relationship between `User` and `Post` (each multiple user can have multiple posts). MANY TO MANY
+  
+   - Implement CRUD API For each relationship :
      - Create a new post for a user.
      - Retrieve all posts for a specific user.
-     - Update and delete posts.
+     - Update and delete posts. ..working
 
 9. **Middleware**:
 
@@ -336,5 +347,3 @@ These indicate that the server failed to fulfill a valid request.
 11. **Rate Limiting**:
 
 - Implement rate limiting to prevent abuse of your API. Limit the number of requests a single IP can make in a specific time frame.
-
-

@@ -26,6 +26,7 @@ const User = new mongoose.Schema({
     //   message: "Password should not contain the word 'password'",
     // },
   },
+ 
 });
 User.plugin(mongoosePaginate);
 
